@@ -59,3 +59,30 @@ Validated via explicit system level timestamps (`System.currentTimeMillis()`):
 ```bash
 git clone https://github.com/YOUR_USERNAME/news-aggregator.git
 cd news-aggregator
+```
+
+### 2. Configure Environment Variables
+Copy the secure properties template file to generate your local configurations:
+
+```bash
+cp src/main/resources/application.properties.example src/main/resources/application.properties
+```
+
+### 3. Spin Up Infrastructure (Redis)
+Ensure you have Redis running locally via Native Service or Docker:
+```bash
+docker run -d --name news-redis -p 6379:6379 redis:alpine
+```
+
+### 4. Build and Run Application
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+## 🛡️ Production & Security Edge Case Handling
+
+* **Polymorphic JSON Handling:** Configured `RedisSerializer.json()` explicitly to bundle type metadata (`@class` schemas) during cache mutations, preventing random `ClassCastException` hazards upon object deserialization.
+* **Smart Taxonomy Mapping:** The feed controller evaluates user preferences dynamically. If standard categories (e.g., `technology`, `business`) are selected, it queries the high-speed breaking `/top-headlines` portal. For niche keywords (e.g., `gold`, `petrol`), it dynamically rewrites criteria to query standard target metrics securely.
+
+
