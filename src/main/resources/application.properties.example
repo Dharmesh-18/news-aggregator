@@ -1,0 +1,33 @@
+spring.application.name=aggregator
+
+# ===================================================================
+# Database Configuration (Neon Serverless PostgreSQL)
+# ===================================================================
+spring.datasource.url=jdbc:postgresql://<YOUR_NEON_DB_HOST>/neondb?sslmode=require
+spring.datasource.username=<YOUR_DATABASE_USERNAME>
+spring.datasource.password=<YOUR_DATABASE_PASSWORD>
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# ===================================================================
+# HikariCP Connection Pool Settings (First Principle: Resource Optimization)
+# ===================================================================
+# Neon Pooler use kar rahe ho, isliye keeping connections lean is smart engineering.
+spring.datasource.hikari.maximum-pool-size=10
+spring.datasource.hikari.minimum-idle=2
+spring.datasource.hikari.idle-timeout=30000
+spring.datasource.hikari.max-lifetime=1800000
+spring.datasource.hikari.connection-timeout=20000
+
+# ===================================================================
+# JPA / Hibernate Configurations
+# ===================================================================
+# 'update' automatic schema management ke liye (development phase mein efficient hai)
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+# ===================================================================
+# Third-Party News API Configuration
+# ===================================================================
+news.api.key=<YOUR_NEWSAPI_ORG_API_KEY>
